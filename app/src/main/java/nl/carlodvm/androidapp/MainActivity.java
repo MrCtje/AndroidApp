@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +26,12 @@ import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import nl.carlodvm.androidapp.Animation.ScalingNode;
 import nl.carlodvm.androidapp.Core.Destination;
@@ -40,6 +41,8 @@ import nl.carlodvm.androidapp.Core.MapReader;
 import nl.carlodvm.androidapp.Core.PathFinder;
 import nl.carlodvm.androidapp.Core.SensorManager;
 import nl.carlodvm.androidapp.Core.World;
+import nl.carlodvm.androidapp.DataTransferObject.ItemData;
+import nl.carlodvm.androidapp.View.ImageSpinnerAdapter;
 import nl.carlodvm.androidapp.View.PathView;
 
 public class MainActivity extends AppCompatActivity {
@@ -77,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         pathFinder = new PathFinder();
 
         pathView = findViewById(R.id.PathView);
-        imageMap = new DestinationBitmapReader(this).ReadBitmaps();
-
         sensorManager = new SensorManager(this);
 
         arrow = new ScalingNode(this, "arrow.sfb", 2.5f);
@@ -109,10 +110,12 @@ public class MainActivity extends AppCompatActivity {
     private void initMapAndDropdown() {
         MapReader mp = new MapReader();
         world = mp.readFile(this);
+        imageMap = new DestinationBitmapReader(this).ReadBitmaps();
         Spinner dropdown = findViewById(R.id.spinner);
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item);
-        adapter.add("Kies uw bestemming...");
-        adapter.addAll(world.getDestinations());
+        ArrayList<ItemData> list = new ArrayList<>();
+        list.add(new ItemData(getString(R.string.DestinationSpinnerDefault), null));
+        list.addAll(world.getDestinations().stream().map((x) -> new ItemData(x, imageMap.get(x.getImageIndex()))).collect(Collectors.toList()));
+        ImageSpinnerAdapter adapter = new ImageSpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(onDropdownSelect());
     }
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 Spinner spinner = (Spinner) parent;
                 //Position == 0 is default hinted message
                 if (position != 0) {
-                    destination = (Destination) spinner.getItemAtPosition(position);
+                    destination = (Destination) ((ItemData) spinner.getItemAtPosition(position)).getDest();
                 }
             }
 
@@ -166,8 +169,6 @@ public class MainActivity extends AppCompatActivity {
                                 Destination closestDst = pathFinder.getClosestDestination(world, path);
                                 List<Destination> dsts = pathFinder.getDestinationsFromPath(world, path);
                                 pathView.setNavigationPoints(dsts, imageMap);
-                                //StringBuilder sb = new StringBuilder();
-                                //dsts.stream().forEachOrdered(sb::append);
                                 int xDir = closestDst.getX() - begin.getX(), yDir = closestDst.getY() - begin.getY();
                                 double yAngle = xDir != 0 ? Math.toDegrees(Math.tan(yDir / xDir)) :
                                         ( yDir > 0 ?  Math.toDegrees((3*Math.PI) / 2) : Math.toDegrees(Math.PI / 2));
@@ -176,12 +177,10 @@ public class MainActivity extends AppCompatActivity {
 
                                 TextView textView = findViewById(R.id.textView);
                                 String distanceString = "~" + path.size() * Grid.GridResolution + "m";
-                                //textView.setText(distanceString + "\n" + sb.toString());
                                 textView.setText(distanceString);
                                 textView.setBackgroundResource(R.color.colorPrimary);
 
                             } else {
-                                //Toast.makeText(this, "You have reached your destination.", Toast.LENGTH_LONG).show();
                                 arrow.setParent(null);
                                 endNode.setParent(null);
                                 endNode.renderNode(augmentedImage, arFragment, (node) -> node.setLocalRotation(

@@ -4,4 +4,5 @@
     <string name="GPSCaptureButton1">Capture GPS 1</string>
     <string name="FileCreationErrorMessage">Can\'t create file.</string>
     <string name="FileNotFoundErrorMessage">File does not exist.</string>
+    <string name="DestinationSpinnerDefault">Kies uw bestemming...</string>
 </resources>

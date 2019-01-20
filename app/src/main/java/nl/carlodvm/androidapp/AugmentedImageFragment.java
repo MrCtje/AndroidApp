@@ -64,8 +64,6 @@ public class AugmentedImageFragment extends ArFragment {
     }
 
     private boolean setupAugmentedImageDatabase(Config config, Session session) {
-        AugmentedImageDatabase augmentedImageDatabase;
-
         AssetManager assetManager = getContext() != null ? getContext().getAssets() : null;
         if (assetManager == null) {
             Log.e(TAG, "Context is null, cannot intitialize image database.");
