@@ -93,7 +93,7 @@ public class MapReader {
 
     private void createDestination(String input, int lineCount) {
         String[] param = input.split(",");
-        destinations.add(new Destination(Integer.parseInt(param[0]) - 1, Integer.parseInt(param[1]) - 1, param[2], Integer.parseInt(param[3])));
+        destinations.add(new Destination(Integer.parseInt(param[0]) - 1, Integer.parseInt(param[1]) - 1, param[2], Integer.parseInt(param[3]), param[4]));
     }
 
     private void createGrids(String nextLine, int lineCount) {

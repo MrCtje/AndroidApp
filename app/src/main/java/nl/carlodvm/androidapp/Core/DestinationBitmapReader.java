@@ -12,11 +12,16 @@ import java.util.Map;
 public class DestinationBitmapReader {
     private Activity activity;
     String[] fileNames = {
-            "1_LinksVoor.png",
-            "2_LinksAchter.png",
-            "3_RechtsVoor.png",
-            "4_RechtsAchter.png",
-            "5_Voordeur.png"
+            "0_ENTR.jpg",
+            "1_CAF.jpg",
+            "2_STAIR.jpg",
+            "3_POLI.jpg",
+            "4_FIRST.jpg",
+            "5_SCND.jpg",
+            "6_THRD.jpg",
+            "7_GARAG.jpg",
+            "8_REST.jpg",
+            "9_RECEPTIE.jpg"
     };
 
     public DestinationBitmapReader(Activity activity) {

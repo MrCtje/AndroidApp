@@ -20,15 +20,21 @@ WWWWWWWWWWNNNN
 NNWWWWWWNNNNNN
 NNWWWWWWNNNNNN
 WWWWWWWWWWNNNN
-NNWNNNNWWWWNNN
+NNWWWWWWWWNNNN
 WWWNNNNWNNNNNN
 NWWWNNNWNNNNNN
 NNWWNNNWNNNNNN
 NNWNNNWWNNNNNN
 NNWWNNNWNNNNNN
 NNWWWWWWNNNNNN
-4
-9,3,Hoofdingang,1
-8,4,Trappenhuis,2
-9,7,Parkeergarage,3
-11,7,Balie,4
+10
+3,9,Hoofdingang,0, De entree van Revalidatiecentrum Rijndam
+2,11,Cafe,1, Voor een heerlijk kopje koffie of thee
+4,8,Trappenhuis,2, De trap bevindt zich voor u
+7,14,Afdeling: poliklinische behandeling,3, U bent bij de poli aangekomen
+4,8,Afdeling: klinische behandeling 1,4,Ga 1 etage omhoog
+4,8,Afdeling: klinische behandeling 2,5, Ga 2 etages omhoog
+4,8,Afdeling: klinische behandeling 3,6, Ga 3 etages omhoog
+7,9,Parkeergarage,7,Daal de trap af
+7,9,Restaurant,8,Daal de trap af
+7,11,Receptie,9, Hier kunt u zich aanmelden

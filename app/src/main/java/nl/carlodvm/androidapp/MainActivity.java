@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                                                 , Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), -90))));
                                 TextView textView = findViewById(R.id.textView);
                                 textView.setBackgroundResource(R.color.colorPrimary);
-                                textView.setText("0m");
+                                textView.setText(destination.getComment());
                             }
                         }
                     }
