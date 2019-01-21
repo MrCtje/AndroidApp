@@ -132,7 +132,11 @@ public class MainActivity extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.spinner);
         ArrayList<ItemData> list = new ArrayList<>();
         list.add(new ItemData(getString(R.string.DestinationSpinnerDefault), null));
-        list.addAll(world.getDestinations().stream().map((x) -> new ItemData(x, imageMap.get(x.getImageIndex()))).collect(Collectors.toList()));
+        int width = (int) (80 * getResources().getDisplayMetrics().density + 0.5f), height = (int) (80 * getResources().getDisplayMetrics().density + 0.5f);
+        list.addAll(world.getDestinations()
+                .stream()
+                .map((x) -> new ItemData(x, Bitmap.createScaledBitmap(imageMap.get(x.getImageIndex()), width, height, false)))
+                .collect(Collectors.toList()));
         ImageSpinnerAdapter adapter = new ImageSpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(onDropdownSelect());
