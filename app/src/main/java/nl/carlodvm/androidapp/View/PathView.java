@@ -79,7 +79,7 @@ public class PathView extends HorizontalScrollView {
             int count = 0;
             for (Destination destination : destinationPath) {
                 Bitmap bitmap = imageMap.get(destination.getImageIndex());
-                int space = hasSpace ? (getLayoutParams().width / ratio * spaceCount / (spaceCount - 1)) / 2 : 1;
+                int space = hasSpace ? (getLayoutParams().width / ratio * spaceCount / (spaceCount)) / 2 : 1;
                 int imageWidth = getLayoutParams().height;
                 canvas.drawBitmap(bitmap,
                         null,
