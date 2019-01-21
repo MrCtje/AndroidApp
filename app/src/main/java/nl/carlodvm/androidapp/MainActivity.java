@@ -62,9 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
 
+    private TextView textView;
+
     private PathView pathView;
     private Map<Integer, Bitmap> imageMap;
+
     private MapView mapView;
+    private boolean isMapVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,13 +83,21 @@ public class MainActivity extends AppCompatActivity {
 
         initMapAndDropdown();
 
+        pathView = findViewById(R.id.PathView);
         mapView = findViewById(R.id.mapView);
+        textView = findViewById(R.id.textView);
+
         View toggleMapButton = findViewById(R.id.toggleMapButton);
-        toggleMapButton.setOnClickListener((c) -> mapView.animate().alpha(mapView.getAlpha() == 1.0 ? 0.0f : 1.0f));
+        toggleMapButton.setOnClickListener((c) -> {
+            isMapVisible = !isMapVisible;
+            mapView.animate().alpha(isMapVisible ? 0.0f : .7f);
+            pathView.setVisibility(!isMapVisible ? View.GONE : View.VISIBLE);
+            textView.setVisibility(!isMapVisible ? View.GONE : View.VISIBLE);
+        });
 
         pathFinder = new PathFinder();
 
-        pathView = findViewById(R.id.PathView);
+
         sensorManager = new SensorManager(this);
 
         arrow = new ScalingNode(this, "arrow.sfb", 2.5f);
@@ -182,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
                                 arrow.renderNode(augmentedImage, arFragment, (node) -> node.setWorldRotation(Quaternion.multiply(Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90f)
                                         , Quaternion.axisAngle(new Vector3(0f, 1f, 0f), (float) yAngle))));
 
-                                TextView textView = findViewById(R.id.textView);
                                 String distanceString = "~" + path.size() * Grid.GridResolution + "m";
                                 textView.setText(distanceString);
                                 textView.setBackgroundResource(R.color.colorPrimary);
@@ -193,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
                                 endNode.renderNode(augmentedImage, arFragment, (node) -> node.setLocalRotation(
                                         Quaternion.multiply(Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90f)
                                                 , Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), -90))));
-                                TextView textView = findViewById(R.id.textView);
                                 textView.setBackgroundResource(R.color.colorPrimary);
                                 textView.setText(destination.getComment());
                             }

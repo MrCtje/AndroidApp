@@ -32,9 +32,9 @@ NNWWWWWWNNNNNN
 2,11,Cafe,1, Voor een heerlijk kopje koffie of thee
 4,8,Trappenhuis,2, De trap bevindt zich voor u
 7,14,Afdeling: poliklinische behandeling,3, U bent bij de poli aangekomen
-4,8,Afdeling: klinische behandeling 1,4,Ga 1 etage omhoog
-4,8,Afdeling: klinische behandeling 2,5, Ga 2 etages omhoog
-4,8,Afdeling: klinische behandeling 3,6, Ga 3 etages omhoog
-7,9,Parkeergarage,7,Daal de trap af
-7,9,Restaurant,8,Daal de trap af
+4,7,Afdeling: klinische behandeling 1,4,Ga 1 etage omhoog
+5,8,Afdeling: klinische behandeling 2,5, Ga 2 etages omhoog
+5,7,Afdeling: klinische behandeling 3,6, Ga 3 etages omhoog
+7,7,Parkeergarage,7,Daal de trap af
+7,8,Restaurant,8,Daal de trap af
 7,11,Receptie,9, Hier kunt u zich aanmelden
