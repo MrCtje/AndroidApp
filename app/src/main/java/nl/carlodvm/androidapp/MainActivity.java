@@ -43,6 +43,7 @@ import nl.carlodvm.androidapp.Core.SensorManager;
 import nl.carlodvm.androidapp.Core.World;
 import nl.carlodvm.androidapp.DataTransferObject.ItemData;
 import nl.carlodvm.androidapp.View.ImageSpinnerAdapter;
+import nl.carlodvm.androidapp.View.MapView;
 import nl.carlodvm.androidapp.View.PathView;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     private PathView pathView;
     private Map<Integer, Bitmap> imageMap;
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ux);
 
         initMapAndDropdown();
+
+        mapView = findViewById(R.id.mapView);
+        View toggleMapButton = findViewById(R.id.toggleMapButton);
+        toggleMapButton.setOnClickListener((c) -> mapView.animate().alpha(mapView.getAlpha() == 1.0 ? 0.0f : 1.0f));
 
         pathFinder = new PathFinder();
 
@@ -169,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                                 Destination closestDst = pathFinder.getClosestDestination(world, path);
                                 List<Destination> dsts = pathFinder.getDestinationsFromPath(world, path);
                                 pathView.setNavigationPoints(dsts, imageMap);
+                                mapView.setPath(path, dsts, imageMap, world);
                                 int xDir = closestDst.getX() - begin.getX(), yDir = closestDst.getY() - begin.getY();
                                 double yAngle = xDir != 0 ? Math.toDegrees(Math.tan(yDir / xDir)) :
                                         ( yDir > 0 ?  Math.toDegrees((3*Math.PI) / 2) : Math.toDegrees(Math.PI / 2));

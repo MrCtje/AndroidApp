@@ -20,6 +20,17 @@
             android:layout_alignParentTop="true" />
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/toggleMapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="80dp"
+            android:clickable="true"
+            app:srcCompat="@android:drawable/ic_dialog_map" />
+
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="53dp"
             android:layout_height="wrap_content"
@@ -44,6 +55,7 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+
         <nl.carlodvm.androidapp.View.PathView
             android:id="@+id/PathView"
             android:layout_width="349dp"
@@ -58,6 +70,13 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" />
         </nl.carlodvm.androidapp.View.PathView>
+
+        <nl.carlodvm.androidapp.View.MapView
+            android:id="@+id/mapView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.0"
+            app:srcCompat="@drawable/kaart" />
 
     </RelativeLayout>
 
