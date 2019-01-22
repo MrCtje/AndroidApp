@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -81,29 +82,35 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_ux);
 
-        initMapAndDropdown();
+        findViews();
 
-        pathView = findViewById(R.id.PathView);
-        mapView = findViewById(R.id.mapView);
-        textView = findViewById(R.id.textView);
+        initMapAndDropdown();
 
         View toggleMapButton = findViewById(R.id.toggleMapButton);
         toggleMapButton.setOnClickListener((c) -> {
-            isMapVisible = !isMapVisible;
-            mapView.animate().alpha(isMapVisible ? 0.0f : .7f);
+            mapView.animate()
+                    .alpha(isMapVisible ? 0.0f : .7f)
+                    .scaleX(isMapVisible ? 0.1f : 1.0f)
+                    .scaleY(isMapVisible ? 0.1f : 1.0f)
+                    .setUpdateListener(x-> mapView.requestLayout());
             pathView.setVisibility(!isMapVisible ? View.GONE : View.VISIBLE);
             textView.setVisibility(!isMapVisible ? View.GONE : View.VISIBLE);
+            isMapVisible = !isMapVisible;
         });
 
         pathFinder = new PathFinder();
-
 
         sensorManager = new SensorManager(this);
 
         arrow = new ScalingNode(this, "arrow.sfb", 2.5f);
         endNode = new ScalingNode(this, "flagpole.sfb", 0.3f);
-        arFragment = (AugmentedImageFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
+
+        configureSession();
+    }
+
+    private void configureSession() {
         Session session = null;
         try {
             session = new Session(this);
@@ -115,14 +122,19 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        configureSession(session);
+        if(session != null) {
+            Config config = new Config(session);
+            config.setUpdateMode(Config.UpdateMode.LATEST_CAMERA_IMAGE);
+            session.configure(config);
+            arFragment.getSessionConfiguration(session);
+        }
     }
 
-    private void configureSession(Session session) {
-        Config config = new Config(session);
-        config.setUpdateMode(Config.UpdateMode.LATEST_CAMERA_IMAGE);
-        session.configure(config);
-        arFragment.getSessionConfiguration(session);
+    private void findViews(){
+        pathView = findViewById(R.id.PathView);
+        mapView = findViewById(R.id.mapView);
+        textView = findViewById(R.id.textView);
+        arFragment = (AugmentedImageFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
     }
 
     private void initMapAndDropdown() {
@@ -150,6 +162,12 @@ public class MainActivity extends AppCompatActivity {
                 //Position == 0 is default hinted message
                 if (position != 0) {
                     destination = (Destination) ((ItemData) spinner.getItemAtPosition(position)).getDest();
+                    pathView.setNavigationPoints(null,null);
+                    mapView.setPath(null, null, null, null);
+                    textView.setText("");
+                    textView.setBackgroundColor(Color.TRANSPARENT);
+                    arrow.setParent(null);
+                    endNode.setParent(null);
                 }
             }
 
@@ -184,9 +202,6 @@ public class MainActivity extends AppCompatActivity {
                             if (begin != null && destination != begin) {
                                 arrow.setParent(null);
                                 endNode.setParent(null);
-                                //sensorManager.updateOrientationAngles();
-                                //float angleBetweenDeviceAndNorth = sensorManager.getmOrientationAngles()[0];
-                                //float dxZ = sensorManager.getAccelerometerReading()[2];
                                 List<Grid> path = pathFinder.calculateShortestPath(world, world.getGrid(begin.getX(), begin.getY()), world.getGrid(destination.getX(), destination.getY()));
                                 Destination closestDst = pathFinder.getClosestDestination(world, path);
                                 List<Destination> dsts = pathFinder.getDestinationsFromPath(world, path);

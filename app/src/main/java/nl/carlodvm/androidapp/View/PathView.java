@@ -39,14 +39,16 @@ public class PathView extends HorizontalScrollView {
     }
 
     public void setNavigationPoints(List<Destination> destination, Map<Integer, Bitmap> imageMap) {
-        destinationPath = new LinkedList<>(destination);
-        if (destination.size() > 0)
-            currentNavigationPoint = destination.get(0);
+        destinationPath = null;
+        if(destination != null && imageMap != null) {
+            destinationPath = new LinkedList<>(destination);
+            if (destination.size() > 0)
+                currentNavigationPoint = destination.get(0);
 
-        setImageMap(imageMap);
-
-        invalidate();
-        requestLayout();
+            setImageMap(imageMap);
+        }
+            invalidate();
+            requestLayout();
     }
 
     public void selectNextPoint() {
@@ -68,7 +70,7 @@ public class PathView extends HorizontalScrollView {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        if (destinationPath != null) {
+        if (destinationPath != null && imageMap != null) {
             int ratio = getLayoutParams().width / getLayoutParams().height;
 
             int destCount = destinationPath.size();
