@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                                 arrow.renderNode(augmentedImage, arFragment, (node) -> node.setLocalRotation(
                                         Quaternion.multiply(
                                                 Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90f)
-                                                , Quaternion.axisAngle(new Vector3(0f, 1f, 0f), yDir > 0 ? (float) (yAngle > 45 ? yAngle : 90 - yAngle) : (float) (xDir < 0 ? -90 - yAngle : -yAngle)))));
+                                                , Quaternion.axisAngle(new Vector3(0f, 1f, 0f), yDir < 0 ? (float) (yAngle > 45 ? 180 - yAngle : 90 - yAngle) : (float) (xDir < 0 ? -90 - yAngle : -yAngle)))));
 
                                 String distanceString = "~" + Math.round(path.size() * Grid.GridResolution) + "m";
                                 textView.setText(distanceString);
