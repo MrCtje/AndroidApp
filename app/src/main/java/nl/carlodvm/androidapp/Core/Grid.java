@@ -10,7 +10,7 @@ public class Grid {
     private int x;
     private boolean passable;
     //In meters
-    public static float GridResolution = 2;
+    public static float GridResolution = 0.595f;
 
     public Grid(int x, int y, boolean passable) {
         this.x = x;

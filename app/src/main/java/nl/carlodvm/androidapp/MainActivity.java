@@ -186,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
         Collection<AugmentedImage> updatedAugmentedImages =
                 frame.getUpdatedTrackables(AugmentedImage.class);
-
         for (AugmentedImage augmentedImage : updatedAugmentedImages) {
             switch (augmentedImage.getTrackingState()) {
                 case PAUSED:
@@ -207,13 +206,16 @@ public class MainActivity extends AppCompatActivity {
                                 List<Destination> dsts = pathFinder.getDestinationsFromPath(world, path);
                                 pathView.setNavigationPoints(dsts, imageMap);
                                 mapView.setPath(path, dsts, imageMap, world);
-                                int xDir = closestDst.getX() - begin.getX(), yDir = closestDst.getY() - begin.getY();
+                                float xDir = closestDst.getX() - begin.getX(), yDir = closestDst.getY() - begin.getY();
                                 double yAngle = xDir != 0 ? Math.toDegrees(Math.tan(yDir / xDir)) :
                                         ( yDir > 0 ?  Math.toDegrees((3*Math.PI) / 2) : Math.toDegrees(Math.PI / 2));
-                                arrow.renderNode(augmentedImage, arFragment, (node) -> node.setWorldRotation(Quaternion.multiply(Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90f)
-                                        , Quaternion.axisAngle(new Vector3(0f, 1f, 0f), (float) yAngle))));
 
-                                String distanceString = "~" + path.size() * Grid.GridResolution + "m";
+                                arrow.renderNode(augmentedImage, arFragment, (node) -> node.setLocalRotation(
+                                        Quaternion.multiply(
+                                                Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90f)
+                                                , Quaternion.axisAngle(new Vector3(0f, 1f, 0f), yDir > 0 ? (float) (yAngle > 45 ? yAngle : 90 - yAngle) : (float) (xDir < 0 ? -90 - yAngle : -yAngle)))));
+
+                                String distanceString = "~" + Math.round(path.size() * Grid.GridResolution) + "m";
                                 textView.setText(distanceString);
                                 textView.setBackgroundResource(R.color.colorPrimary);
 

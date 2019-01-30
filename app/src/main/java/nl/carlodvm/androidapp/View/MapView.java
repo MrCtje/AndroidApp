@@ -42,6 +42,7 @@ public class MapView extends AppCompatImageView {
         this.dests = dests;
         this.imageMap = imageMap;
         this.world = world;
+
         paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStrokeWidth(4);
@@ -53,7 +54,7 @@ public class MapView extends AppCompatImageView {
         super.draw(canvas);
 
         if (grids != null && dests != null && world != null && imageMap != null) {
-            int width = getWidth();
+            int width = getWidth() + (int) getX();
             int height = getHeight();
             int gWidth = width / world.getWidth();
             int gHeight = height / world.getHeight();
@@ -62,18 +63,18 @@ public class MapView extends AppCompatImageView {
                 Grid grid = it.next();
                 Grid nextGrid = it.hasNext() ? grids.get(it.nextIndex()) : null;
 
-                int x = (grid.getX() + 1) * gWidth;
-                int y = height - (grid.getY() + 3) * gHeight;
+                int x = (grid.getX() + 2) * gWidth + IMAGE_SIZE / 2;
+                int y = height - (grid.getY() + 2) * gHeight;
                 if (nextGrid != null) {
-                    int nextX = (nextGrid.getX() + 1) * gWidth;
-                    int nextY = height - (nextGrid.getY() + 3) * gHeight;
+                    int nextX = (nextGrid.getX() + 2) * gWidth + IMAGE_SIZE / 2;
+                    int nextY = height - (nextGrid.getY() + 2) * gHeight;
                     canvas.drawLine(x, y, nextX, nextY, paint);
                 }
             }
 
             dests.stream().forEach(x -> {
-                int left = (x.getX() + 1) * gWidth;
-                int top = height - (x.getY() + 3) * gHeight;
+                int left = (x.getX() + 2) * gWidth + IMAGE_SIZE / 2;
+                int top = height - (x.getY() + 2) * gHeight;
                 canvas.drawBitmap(imageMap.get(x.getImageIndex()),
                         null,
                         new Rect(left - IMAGE_SIZE, top - IMAGE_SIZE, left + IMAGE_SIZE, top + IMAGE_SIZE),
