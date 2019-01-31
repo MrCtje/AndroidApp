@@ -94,13 +94,13 @@ NNNNNNNNNNNWWWNNWNWWWNNNNNNNNNNNNNNNNNN
 NNNNNNNNNNNWWWNNWNWWWNNNNNNNNNNNNNNNNNN
 NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
 10
-8,37,Hoofdingang,0, De entree van Revalidatiecentrum Rijndam
-5,46,Cafe,1, Voor een heerlijk kopje koffie of thee
-12,31,Trappenhuis,2, De trap bevindt zich voor u
-10,30,Afdeling: poliklinische behandeling,3, U bent bij de poli aangekomen
-11,30,Afdeling: klinische behandeling 1,4, Ga 1 etage omhoog
-10,31,Afdeling: klinische behandeling 2,5, Ga 2 etages omhoog
-11,31,Afdeling: klinische behandeling 3,6, Ga 3 etages omhoog
-20,37,Parkeergarage,7,Daal de trap af
-20,36,Restaurant,8,Daal de trap af
-25,43,Receptie,9, Hier kunt u zich aanmelden
+8,37,Hoofdingang,0, De entree van Revalidatiecentrum Rijndam,E
+5,46,Cafe,1, Voor een heerlijk kopje koffie of thee,Z
+12,31,Trappenhuis,2, De trap bevindt zich voor u,N
+22,60,Afdeling: poliklinische behandeling,3, U bent bij de poli aangekomen,N
+11,30,Afdeling: klinische behandeling 1,4, Ga 1 etage omhoog,N
+10,31,Afdeling: klinische behandeling 2,5, Ga 2 etages omhoog,N
+11,31,Afdeling: klinische behandeling 3,6, Ga 3 etages omhoog,N
+20,37,Parkeergarage,7,Daal de trap af,W
+20,36,Restaurant,8,Daal de trap af,W
+25,43,Receptie,9, Hier kunt u zich aanmelden,Z

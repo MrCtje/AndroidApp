@@ -216,10 +216,34 @@ public class MainActivity extends AppCompatActivity {
                                 double yAngle = xDir != 0 ? Math.toDegrees(Math.tan(yDir / xDir)) :
                                         ( yDir > 0 ?  Math.toDegrees((3*Math.PI) / 2) : Math.toDegrees(Math.PI / 2));
 
+                                float correctedAngle = 0;
+
+                                switch (closestDst.getDirection()) {
+                                    case EAST:
+                                        correctedAngle = 90;
+                                        break;
+                                    case SOUTH:
+                                        correctedAngle = 0;
+                                        break;
+                                    case NORTH:
+                                        correctedAngle = 180;
+                                        break;
+                                    case WEST:
+                                        correctedAngle = -90;
+                                }
+
+                                float finalCorrectedAngle = correctedAngle;
+
                                 arrow.renderNode(augmentedImage, arFragment, (node) -> node.setLocalRotation(
                                         Quaternion.multiply(
-                                                Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90f)
-                                                , Quaternion.axisAngle(new Vector3(0f, 1f, 0f), yDir < 0 ? (float) (yAngle > 45 ? 180 - yAngle : 90 - yAngle) : (float) (xDir < 0 ? -90 - yAngle : -yAngle)))));
+
+                                                Quaternion.multiply(
+                                                        Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), 90f)
+                                                        , Quaternion.axisAngle(new Vector3(0f, 1f, 0f), yDir < 0 ? (float) (yAngle > 45 ? 180 - yAngle : 90 - yAngle) : (float) (xDir < 0 ? -90 - yAngle : -yAngle)))
+
+                                                , Quaternion.axisAngle(new Vector3(.0f, 1.0f, 0.0f), finalCorrectedAngle)
+                                        )
+                                ));
 
                                 String distanceString = "~" + Math.round(path.size() * Grid.GridResolution) + "m";
                                 textView.setText(distanceString);

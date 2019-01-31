@@ -68,7 +68,7 @@ public class MapReader {
                 }
 
                 if (lineCount > destinationLineNumber && lineCount < destinationLineNumber + destinationCount) {
-                    createDestination(sCurrentLine, lineCount);
+                    createDestination(sCurrentLine);
                 }
             }
 
@@ -91,9 +91,9 @@ public class MapReader {
         return world;
     }
 
-    private void createDestination(String input, int lineCount) {
+    private void createDestination(String input) {
         String[] param = input.split(",");
-        destinations.add(new Destination(Integer.parseInt(param[0]) - 1, Integer.parseInt(param[1]) - 1, param[2], Integer.parseInt(param[3]), param[4]));
+        destinations.add(new Destination(Integer.parseInt(param[0]) - 1, Integer.parseInt(param[1]) - 1, param[2], Integer.parseInt(param[3]), param[4], param[5]));
     }
 
     private void createGrids(String nextLine, int lineCount) {
