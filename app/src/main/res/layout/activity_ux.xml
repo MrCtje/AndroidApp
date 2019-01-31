@@ -41,7 +41,7 @@
             android:clickable="true"
             android:focusable="true"
             app:backgroundTint="@color/colorPrimary"
-            app:srcCompat="@android:drawable/ic_menu_preferences" />
+            app:srcCompat="@android:drawable/ic_menu_help" />
 
         <TextView
             android:id="@+id/textView"
@@ -79,6 +79,13 @@
             android:scaleType="fitCenter"
             android:scaleY="0.1"
             app:srcCompat="@drawable/kaart" />
+
+        <ImageView
+            android:id="@+id/helpView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/help" />
 
     </RelativeLayout>
 

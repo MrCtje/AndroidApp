@@ -7,10 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
         findViews();
 
         initMapAndDropdown();
+
+        ImageView helpView = findViewById(R.id.helpView);
+        FloatingActionButton helpButton = findViewById(R.id.floatingActionButton);
+        helpButton.setOnClickListener((e) -> helpView.setVisibility(helpView.getVisibility() == View.GONE ? View.VISIBLE : View.GONE));
 
         View toggleMapButton = findViewById(R.id.toggleMapButton);
         toggleMapButton.setOnClickListener((c) -> {
